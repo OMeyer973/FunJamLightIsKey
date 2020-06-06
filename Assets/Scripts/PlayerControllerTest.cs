@@ -31,8 +31,8 @@ public class PlayerControllerTest : MonoBehaviour
         InputMovement = value.Get<Vector2>();
         // Debug.Log("move");
     }
-
     private void OnShoot()
+
     {
         Debug.Log("button A pressed (shoot)");
     }
