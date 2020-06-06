@@ -5,8 +5,12 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    public float rotationSpeed = 100f;
-    public float normalSpeed = 10f;
+    [SerializeField]
+    private int inputIndex = 0;
+    private Vector2 inputMove;
+
+    public float rotationSpeed = 50f;
+    public float normalSpeed = 50f;
     public float acceleration = .2f;
     public float deceleration = 1f;
 
@@ -18,7 +22,6 @@ public class PlayerController : MonoBehaviour
 
     private float eps = .01f; // epsilon on the target speed to determine if we use acceleration or deceleration factor
     private Vector3 currSpeed;
-    private Vector2 inputMove;
 
     // Start is called before the first frame update
     void Start()
@@ -64,10 +67,17 @@ public class PlayerController : MonoBehaviour
         inputMove = value.Get<Vector2>();        
     }
 
+    public void setInputMoveVector(Vector2 vec2)
+    {
+        inputMove = vec2;
+    }
+
     private void OnShoot()
     {
         Debug.Log("button A pressed (shoot)");
         Missile missile = Instantiate(missilePrefab, transform.position, transform.rotation);
         missile.target = enemy; 
     }
+
+    public int GetInputIndex() { return inputIndex;  }
 }
