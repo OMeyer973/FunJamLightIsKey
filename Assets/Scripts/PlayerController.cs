@@ -5,11 +5,12 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     
-    public float Speed =.5f;
+    public float rotationSpeed = 50f;
+    public float normalSpeed = 50f;
     public float acceleration = .2f;
     public float deceleration = 1f;
 
-    public float baseRotationSpeed;
+    public float baseRotationSpeed = 30f;
     public Transform ReferencePlanet;
 
     private float eps = .01f; // epsilon on the target speed to determine if we use acceleration or deceleration factor
@@ -30,14 +31,27 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector3 targetSpeed = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0) * Speed;
+        Move()
+    }
+
+    private void Move()
+    {
+        Vector3 targetDirection = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0);
+        /*
+        // controls full classique
         if (targetSpeed.magnitude <= eps)
             currSpeed = Vector3.Lerp(currSpeed, targetSpeed, deceleration);
         else currSpeed = Vector3.Lerp(currSpeed, targetSpeed, acceleration);
-
         transform.position += currSpeed * Time.fixedDeltaTime;
+        */
 
-        transform.RotateAround(ReferencePlanet.transform.position, Vector3.forward, baseRotationSpeed * Time.fixedDeltaTime);
+        Vector3 orbitNormal = (ReferencePlanet.transform.position - transform.position).normalized;
+        Vector3 orbitTangent = Vector3.Cross(orbitNormal, Vector3.forward);
 
+        float currRotationSpeed = Vector3.Dot(targetDirection, orbitTangent) * rotationSpeed;
+        float currNormalSpeed = Vector3.Dot(targetDirection, orbitNormal) * normalSpeed;
+
+        transform.RotateAround(ReferencePlanet.transform.position, Vector3.forward, currRotationSpeed * Time.fixedDeltaTime);
+        transform.position += currNormalSpeed * orbitNormal;
     }
 }
