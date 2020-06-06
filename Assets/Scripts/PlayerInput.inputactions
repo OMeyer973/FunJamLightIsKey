@@ -1,0 +1,52 @@
+{
+    "name": "PlayerInput",
+    "maps": [
+        {
+            "name": "player",
+            "id": "277cd6c9-34c8-41f7-8790-4b99ca51f81f",
+            "actions": [
+                {
+                    "name": "move",
+                    "type": "Value",
+                    "id": "b385b299-64d2-48cc-ac7a-e4cfd8b1c730",
+                    "expectedControlType": "Stick",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "shoot",
+                    "type": "Button",
+                    "id": "e6d85147-12f2-4c26-bbc5-60e6dd66d8e8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "13dc0e9a-29cc-43ca-a410-dac2a339559c",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2b2f8626-748d-4979-9dff-21ba95188378",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "shoot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
