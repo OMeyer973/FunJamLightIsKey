@@ -1,21 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    
-    public float rotationSpeed = 50f;
-    public float normalSpeed = 50f;
+    public float rotationSpeed = 100f;
+    public float normalSpeed = 10f;
     public float acceleration = .2f;
     public float deceleration = 1f;
 
     public float baseRotationSpeed = 30f;
     public Transform ReferencePlanet;
 
+    public PlayerController enemy;
+    public Missile missilePrefab;
+
     private float eps = .01f; // epsilon on the target speed to determine if we use acceleration or deceleration factor
     private Vector3 currSpeed;
-
+    private Vector2 inputMove;
 
     // Start is called before the first frame update
     void Start()
@@ -36,7 +39,7 @@ public class PlayerController : MonoBehaviour
 
     private void Move()
     {
-        Vector3 targetDirection = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0);
+        Vector3 targetDirection = new Vector3(inputMove.x, inputMove.y, 0);
         /*
         // controls full classique
         if (targetSpeed.magnitude <= eps)
@@ -45,13 +48,26 @@ public class PlayerController : MonoBehaviour
         transform.position += currSpeed * Time.fixedDeltaTime;
         */
 
-        Vector3 orbitNormal = (ReferencePlanet.transform.position - transform.position).normalized;
+        Vector3 orbitNormal = (Vector3.zero - transform.position).normalized;
+        //Vector3 orbitNormal = (ReferencePlanet.transform.position - transform.position).normalized;
         Vector3 orbitTangent = Vector3.Cross(orbitNormal, Vector3.forward);
-
         float currRotationSpeed = Vector3.Dot(targetDirection, orbitTangent) * rotationSpeed;
         float currNormalSpeed = Vector3.Dot(targetDirection, orbitNormal) * normalSpeed;
 
-        transform.RotateAround(ReferencePlanet.transform.position, Vector3.forward, currRotationSpeed * Time.fixedDeltaTime);
-        transform.position += currNormalSpeed * orbitNormal;
+        transform.RotateAround(Vector3.zero, Vector3.forward, currRotationSpeed * Time.fixedDeltaTime);
+        //transform.RotateAround(ReferencePlanet.transform.position, Vector3.forward, currRotationSpeed * Time.fixedDeltaTime);
+        transform.position += orbitNormal * currNormalSpeed * Time.fixedDeltaTime;
+    }
+
+    private void OnMove(InputValue value)
+    {
+        inputMove = value.Get<Vector2>();        
+    }
+
+    private void OnShoot()
+    {
+        Debug.Log("button A pressed (shoot)");
+        Missile missile = Instantiate(missilePrefab, transform.position, transform.rotation);
+        missile.target = enemy;
     }
 }
