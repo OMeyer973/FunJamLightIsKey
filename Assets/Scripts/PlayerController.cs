@@ -68,6 +68,6 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log("button A pressed (shoot)");
         Missile missile = Instantiate(missilePrefab, transform.position, transform.rotation);
-        missile.target = enemy;
+        missile.target = enemy; 
     }
 }
