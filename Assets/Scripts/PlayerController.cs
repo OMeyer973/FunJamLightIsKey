@@ -5,40 +5,41 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    #region MEMBERS
+    // INPUTS
     [SerializeField]
     private int inputIndex = 0;
     private Vector2 inputMove;
 
+    [Header("Movements")]
     public float rotationSpeed = 50f;
     public float normalSpeed = 50f;
-    public float acceleration = .2f;
-    public float deceleration = 1f;
+    public float acceleration = .2f; // NOT USED
+    public float deceleration = 1f; // NOT USED
+    private float eps = .01f; // NOT USED // epsilon on the target speed to determine if we use acceleration or deceleration factor
+    private Vector3 currSpeed;
 
+    [Header("Astronomy physics stuff")]
     public float baseRotationSpeed = 30f;
     public Transform ReferencePlanet;
 
+    [Header("FIGHT")]
+    public float healthPoints = 100;
     public PlayerController enemy;
     public Missile missilePrefab;
+    #endregion MEMBERS
 
-    private float eps = .01f; // epsilon on the target speed to determine if we use acceleration or deceleration factor
-    private Vector3 currSpeed;
-
+    #region METHODS
     // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    void Start() {}
+    
+    // called at player initialization to link it to the input prefab thingy
+    public int GetInputIndex() { return inputIndex; }
 
     // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    void Update() {}
 
-    private void FixedUpdate()
-    {
-        Move();
-    }
+    private void FixedUpdate() { Move(); }
 
     private void Move()
     {
@@ -62,22 +63,26 @@ public class PlayerController : MonoBehaviour
         transform.position += orbitNormal * currNormalSpeed * Time.fixedDeltaTime;
     }
 
-    private void OnMove(InputValue value)
-    {
-        inputMove = value.Get<Vector2>();        
-    }
+    public void setInputMoveVector(Vector2 vec2) { inputMove = vec2; }
 
-    public void setInputMoveVector(Vector2 vec2)
+    public void OnShoot()
     {
-        inputMove = vec2;
-    }
-
-    private void OnShoot()
-    {
-        Debug.Log("button A pressed (shoot)");
         Missile missile = Instantiate(missilePrefab, transform.position, transform.rotation);
-        missile.target = enemy; 
+        missile.emitter = this;
+        missile.target = enemy;
     }
 
-    public int GetInputIndex() { return inputIndex;  }
+    public void TakeDamage(float damage)
+    {
+        healthPoints -= damage;
+        if (healthPoints <= 0)
+            Die();
+    }
+
+    private void Die()
+    {
+        // todo
+    }
+
+    #endregion METHODS
 }

@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 9206037865460599718}
   - component: {fileID: 3804766680109871161}
   - component: {fileID: 8776186451532103088}
-  - component: {fileID: 811673165668297752}
   - component: {fileID: 4228928186910819868}
+  - component: {fileID: 2734102485732674503}
   m_Layer: 0
   m_Name: Missile
   m_TagString: Untagged
@@ -81,20 +81,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!136 &811673165668297752
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1018305584366134678}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &4228928186910819868
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -107,6 +93,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a8058e2b10b0544aa0f703f54beecc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  explosionPrefab: {fileID: 0}
   target: {fileID: 0}
   emitter: {fileID: 0}
   speed: 2
+  damage: 10
+--- !u!70 &2734102485732674503
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1018305584366134678}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 1.0000002, y: 2.0000005}
+  m_Direction: 0
