@@ -6,8 +6,8 @@ public class Missile : MonoBehaviour
 {
     public GameObject explosionPrefab;
 
-    public PlayerController target;
-    public PlayerController emitter;
+    public Spaceship target;
+    public Spaceship emitter;
     public float speed = 4;
     public float damage = 10;
 
@@ -25,7 +25,7 @@ public class Missile : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         Debug.Log("missile colision");
-        PlayerController collidedPlayer = collision.gameObject.GetComponent<PlayerController>();
+        Spaceship collidedPlayer = collision.gameObject.GetComponent<Spaceship>();
         if (collidedPlayer != null && collidedPlayer == emitter) return;
         ContactPoint contact = collision.contacts[0];
         Quaternion rotation = Quaternion.FromToRotation(Vector3.up, contact.normal);

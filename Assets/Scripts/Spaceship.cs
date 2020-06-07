@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour
+public class Spaceship : MonoBehaviour
 {
     #region MEMBERS
     // INPUTS
@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("FIGHT")]
     public float healthPoints = 100;
-    public PlayerController enemy;
+    public Spaceship enemy;
     public Missile missilePrefab;
     #endregion MEMBERS
 
@@ -65,7 +65,7 @@ public class PlayerController : MonoBehaviour
 
     public void setInputMoveVector(Vector2 vec2) { inputMove = vec2; }
 
-    public void OnShoot()
+    public void ShootEnemy()
     {
         Missile missile = Instantiate(missilePrefab, transform.position, transform.rotation);
         missile.emitter = this;

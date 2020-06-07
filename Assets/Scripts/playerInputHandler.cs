@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 public class playerInputHandler : MonoBehaviour
 {
     private PlayerInput playerInput;
-    private PlayerController playerController;
+    private Spaceship playerController;
 
     private void Awake()
     {
@@ -16,7 +16,7 @@ public class playerInputHandler : MonoBehaviour
         int index = playerInput.playerIndex;
 
         // assign playerController
-        var playerControllers = FindObjectsOfType<PlayerController>();
+        var playerControllers = FindObjectsOfType<Spaceship>();
         playerController = playerControllers.FirstOrDefault(p => p.GetInputIndex() == index);
     }
     // Start is called before the first frame update
