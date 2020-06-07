@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -12,12 +13,15 @@ public class Spaceship : MonoBehaviour
     private Vector2 inputMove;
 
     [Header("Movements")]
-    public float rotationSpeed = 50f;
-    public float normalSpeed = 50f;
-    public float acceleration = .2f; // NOT USED
-    public float deceleration = 1f; // NOT USED
-    private float eps = .01f; // NOT USED // epsilon on the target speed to determine if we use acceleration or deceleration factor
-    private Vector3 currSpeed;
+    public float angularSpeed = 500f;
+    public float normalSpeed = 10f;
+    public float angularAcceleration = .05f;
+    public float angularDeceleration = .01f;
+    public float normalAcceleration = .05f;
+    public float normalDeceleration = .05f;
+    private float eps = .01f; // epsilon on the target speed to determine if we use acceleration or deceleration factor
+    private float currAngularSpeed;
+    private float currNormalSpeed;
 
     [Header("Astronomy physics stuff")]
     public float baseRotationSpeed = 30f;
@@ -32,9 +36,9 @@ public class Spaceship : MonoBehaviour
     #region METHODS
     // Start is called before the first frame update
     void Start() {}
-    
-    // called at player initialization to link it to the input prefab thingy
-    public int GetInputIndex() { return inputIndex; }
+
+// called at player initialization to link it to the input prefab thingy
+public int GetInputIndex() { return inputIndex; }
 
     // Update is called once per frame
     void Update() {}
@@ -52,14 +56,24 @@ public class Spaceship : MonoBehaviour
         transform.position += currSpeed * Time.fixedDeltaTime;
         */
 
-        Vector3 orbitNormal = (Vector3.zero - transform.position).normalized;
-        //Vector3 orbitNormal = (ReferencePlanet.transform.position - transform.position).normalized;
+        //Vector3 orbitNormal = (Vector3.zero - transform.position).normalized;
+        Vector3 planetSpaceShip = ReferencePlanet.transform.position - transform.position;
+        Vector3 orbitNormal = (planetSpaceShip).normalized;
         Vector3 orbitTangent = Vector3.Cross(orbitNormal, Vector3.forward);
-        float currRotationSpeed = Vector3.Dot(targetDirection, orbitTangent) * rotationSpeed;
-        float currNormalSpeed = Vector3.Dot(targetDirection, orbitNormal) * normalSpeed;
 
-        transform.RotateAround(Vector3.zero, Vector3.forward, currRotationSpeed * Time.fixedDeltaTime);
-        //transform.RotateAround(ReferencePlanet.transform.position, Vector3.forward, currRotationSpeed * Time.fixedDeltaTime);
+        float targetAngularSpeed = Vector3.Dot(targetDirection, orbitTangent) * angularSpeed;
+        float targetNormalSpeed = Vector3.Dot(targetDirection, orbitNormal) * normalSpeed;
+
+        if (Mathf.Abs(targetAngularSpeed) <= eps)
+            currAngularSpeed = Mathf.Lerp(currAngularSpeed, targetAngularSpeed, angularDeceleration);
+        else currAngularSpeed = Mathf.Lerp(currAngularSpeed, targetAngularSpeed, angularAcceleration);
+
+        if (Mathf.Abs(targetNormalSpeed) <= eps)
+            currNormalSpeed = Mathf.Lerp(currNormalSpeed, targetNormalSpeed, normalDeceleration);
+        else currNormalSpeed = Mathf.Lerp(currNormalSpeed, targetNormalSpeed, normalAcceleration);
+
+        //transform.RotateAround(Vector3.zero, Vector3.forward, currAngularSpeed * Time.fixedDeltaTime);
+        transform.RotateAround(ReferencePlanet.transform.position, Vector3.forward, currAngularSpeed / planetSpaceShip.magnitude * Time.fixedDeltaTime);
         transform.position += orbitNormal * currNormalSpeed * Time.fixedDeltaTime;
     }
 

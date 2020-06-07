@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2825919405878724230}
   - component: {fileID: 5374530416979352011}
   - component: {fileID: 7614201078245216660}
+  - component: {fileID: 2825919405878724232}
   m_Layer: 0
   m_Name: player
   m_TagString: Untagged
@@ -81,6 +82,47 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &5374530416979352011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2825919405878724235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8adb49048a0282e44af62b3a473c6d2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputIndex: 0
+  angularSpeed: 500
+  normalSpeed: 10
+  angularAcceleration: 0.05
+  angularDeceleration: 0.01
+  normalAcceleration: 0.05
+  normalDeceleration: 0.05
+  baseRotationSpeed: 30
+  ReferencePlanet: {fileID: 9206037865460599718, guid: 924612bbde49e02408f69e3fd2c5418e,
+    type: 3}
+  healthPoints: 100
+  enemy: {fileID: 0}
+  missilePrefab: {fileID: 0}
+--- !u!58 &7614201078245216660
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2825919405878724235}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
 --- !u!114 &2825919405878724232
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112,42 +154,3 @@ MonoBehaviour:
   m_DefaultActionMap: player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &5374530416979352011
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2825919405878724235}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8adb49048a0282e44af62b3a473c6d2c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inputIndex: 0
-  rotationSpeed: 50
-  normalSpeed: 50
-  acceleration: 0.2
-  deceleration: 1
-  baseRotationSpeed: 30
-  ReferencePlanet: {fileID: 0}
-  healthPoints: 100
-  enemy: {fileID: 0}
-  missilePrefab: {fileID: 4228928186910819868, guid: 924612bbde49e02408f69e3fd2c5418e,
-    type: 3}
---- !u!58 &7614201078245216660
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2825919405878724235}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.5
