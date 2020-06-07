@@ -22,12 +22,12 @@ public class Missile : MonoBehaviour
         transform.position += transform.forward * speed * Time.fixedDeltaTime;
     }
 
-    void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         Debug.Log("missile colision");
         Spaceship collidedPlayer = collision.gameObject.GetComponent<Spaceship>();
         if (collidedPlayer != null && collidedPlayer == emitter) return;
-        ContactPoint contact = collision.contacts[0];
+        ContactPoint2D contact = collision.GetContact(0);
         Quaternion rotation = Quaternion.FromToRotation(Vector3.up, contact.normal);
         Vector3 position = contact.point;
         Instantiate(explosionPrefab, position, rotation);
