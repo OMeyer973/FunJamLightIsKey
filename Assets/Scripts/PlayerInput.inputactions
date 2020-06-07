@@ -14,7 +14,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "shoot",
+                    "name": "ButtonA",
                     "type": "Button",
                     "id": "e6d85147-12f2-4c26-bbc5-60e6dd66d8e8",
                     "expectedControlType": "Button",
@@ -151,7 +151,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "shoot",
+                    "action": "ButtonA",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -162,7 +162,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "shoot",
+                    "action": "ButtonA",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

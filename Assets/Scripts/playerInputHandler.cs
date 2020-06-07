@@ -35,4 +35,9 @@ public class playerInputHandler : MonoBehaviour
         playerController.setInputMoveVector(value.Get<Vector2>());
     }
 
+    private void OnButtonA()
+    {
+        playerController.ShootEnemy();
+    }
+
 }
