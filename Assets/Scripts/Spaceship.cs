@@ -29,7 +29,9 @@ public class Spaceship : MonoBehaviour
     public Transform referencePlanet;
 
     [Header("FIGHT")]
-    public float healthPoints = 100;
+    [SerializeField]
+    private float maxHealthPoints = 100;
+    public float healthPoints;
     public Spaceship enemy;
     public Missile missilePrefab;
     private Turret turret;
@@ -39,6 +41,7 @@ public class Spaceship : MonoBehaviour
     // Start is called before the first frame update
     void Start() 
     {
+        healthPoints = maxHealthPoints;
         turret = GetComponentInChildren<Turret>();
         if (turret) turret.Initiate(this, enemy); 
         else Debug.LogError("Spaceship can't find child turret");
@@ -99,6 +102,12 @@ public int GetInputIndex() { return inputIndex; }
         healthPoints -= damage;
         if (healthPoints <= 0)
             Die();
+    }
+
+    public void Regen(float healthAmount)
+    {
+        healthPoints += healthAmount;
+        if (healthPoints > maxHealthPoints) { healthPoints = maxHealthPoints; }
     }
 
     private void Die()
