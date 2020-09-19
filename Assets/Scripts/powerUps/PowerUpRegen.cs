@@ -12,13 +12,6 @@ public class PowerUpRegen : PowerUp
 
     #region METHODS
 
-    public override void Start()
-    {
-        base.Start();
-    }
-
-    void Update() { }
-
     protected override void Init()
     {
         PowerUpName = "Regen";

@@ -30,12 +30,11 @@ public abstract class PowerUp : MonoBehaviour
 
     protected void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("powerUp " + PowerUpName + " collision");
         Spaceship collidedPlayer = collision.gameObject.GetComponent<Spaceship>();
 
         if (collidedPlayer != null)
         {
-            Debug.Log("powerUp colision with a player");
+            Debug.Log("powerUp " + PowerUpName + " collision with a player");
             ApplyBonus(collidedPlayer);
         }
 

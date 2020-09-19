@@ -1,19 +1,28 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using System.Linq;
 
 public class PowerUpsManager : MonoBehaviour
 {
     #region MEMBERS
 
+    [System.Serializable]
+    public class PowerUpEntry
+    {
+        public PowerUp powerUp;
+        public float spawnProbability = 1;
+    }
+
+    private List<float> normalizedProbabilities;
+
     [Header("Items list")]
-    public List<PowerUp> availablePowerUps = new List<PowerUp>();
+    public List<PowerUpEntry> availablePowerUps = new List<PowerUpEntry>();
 
     [Header("Spawn Properties")]
-    public float spawnOds = 0.2f;
     [Tooltip("in seconds")]
     public int spawnRate = 2;
 
@@ -26,6 +35,11 @@ public class PowerUpsManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // create probabilities distribution
+        normalizedProbabilities = availablePowerUps.Select(powerUpEntry => powerUpEntry.spawnProbability).ToList();
+        float sum = normalizedProbabilities.Sum();
+        normalizedProbabilities.ForEach(p => p /= sum);
+
         startSpawn();
     }
 
@@ -59,8 +73,22 @@ public class PowerUpsManager : MonoBehaviour
 
     #region PRIVATE_METHODS
 
-    private PowerUp pickRandomPowerUp() { return availablePowerUps[Random.Range(0, availablePowerUps.Count)]; }
+    private PowerUp pickRandomPowerUp()
+    {
+        return availablePowerUps[DiscreteProbabilityDistribution(normalizedProbabilities)].powerUp;
+    }
 
+    private int DiscreteProbabilityDistribution(List<float> proba)
+    {
+        for (int i = 1; i < proba.Count; i++) { proba[i] += proba[i - 1]; }
+
+        float u = Random.value;
+
+        int j = 0;
+        while (u > proba[j] && j < proba.Count - 1) { j++; }
+
+        return j;
+    }
 
     #endregion PRIVATE_METHODS
 }
