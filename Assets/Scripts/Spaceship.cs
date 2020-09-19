@@ -34,6 +34,7 @@ public class Spaceship : MonoBehaviour
     public float healthPoints;
     public Spaceship enemy;
     public Missile missilePrefab;
+    public GameObject deathExplosionPrefab;
     private Turret turret;
     #endregion MEMBERS
 
@@ -112,7 +113,10 @@ public int GetInputIndex() { return inputIndex; }
 
     private void Die()
     {
-        // todo
+        if (deathExplosionPrefab) Instantiate(deathExplosionPrefab, transform.position, transform.rotation);
+        else Debug.LogError("unassiged explosionPrefab in missile");
+
+        Destroy(gameObject);
     }
 
     #endregion METHODS
