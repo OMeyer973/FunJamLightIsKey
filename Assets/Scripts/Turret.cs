@@ -20,7 +20,13 @@ public class Turret : MonoBehaviour
     // Update is called once per frame
     void Update() {}
 
-    public void Aim() { if (target) transform.LookAt(target.transform, Vector3.up); }
+    public void Aim()
+    {
+        if (target)
+            transform.LookAt(target.transform, Vector3.up);
+        else
+            transform.rotation = parentSpaceship.transform.rotation;
+    }
 
     public void Shoot(Missile missile)
     {

@@ -16,7 +16,8 @@ public class Missile : MonoBehaviour
     public void Initiate(Spaceship emitter, Spaceship target)
     {
         this.emitter = emitter;
-        transform.LookAt(target.transform);
+        if(target)
+            transform.LookAt(target.transform);
     }
 
     private void FixedUpdate()
