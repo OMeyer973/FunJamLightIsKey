@@ -6,14 +6,16 @@ public class Missile : MonoBehaviour
 {
     public GameObject explosionPrefab;
 
-    public Spaceship target;
     public Spaceship emitter;
     public float speed = 4;
     public float damage = 10;
 
     // Start is called before the first frame update
-    void Start()
+    void Start() {}
+
+    public void Initiate(Spaceship emitter, Spaceship target)
     {
+        this.emitter = emitter;
         transform.LookAt(target.transform);
     }
 
@@ -22,17 +24,17 @@ public class Missile : MonoBehaviour
         transform.position += transform.forward * speed * Time.fixedDeltaTime;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionEnter(Collision collision)
     {
         Debug.Log("missile colision");
         Spaceship collidedPlayer = collision.gameObject.GetComponent<Spaceship>();
         if (collidedPlayer != null && collidedPlayer == emitter) return;
-        ContactPoint2D contact = collision.GetContact(0);
+        ContactPoint contact = collision.GetContact(0);
         Quaternion rotation = Quaternion.FromToRotation(Vector3.up, contact.normal);
         Vector3 position = contact.point;
         Instantiate(explosionPrefab, position, rotation);
 
-        if (collidedPlayer != null && collidedPlayer == target)
+        if (collidedPlayer != null && collidedPlayer != emitter)
         {
             Debug.Log("missile colision w target");
             collidedPlayer.TakeDamage(damage);
