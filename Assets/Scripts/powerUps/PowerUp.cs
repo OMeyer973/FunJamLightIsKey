@@ -6,8 +6,6 @@ public abstract class PowerUp : MonoBehaviour
 {
     #region MEMBERS
 
-    protected string PowerUpName;
-
     // [SerializeField]
     // [Tooltip("in seconds")]
     // private float selftDestructionDelay = 2.0f;
@@ -19,7 +17,6 @@ public abstract class PowerUp : MonoBehaviour
     public virtual void Start()
     {
         Init();
-        Debug.Log("powerUp " + PowerUpName + " created");
     }
 
     void Update() { }
@@ -33,10 +30,7 @@ public abstract class PowerUp : MonoBehaviour
         Spaceship collidedPlayer = collision.gameObject.GetComponent<Spaceship>();
 
         if (collidedPlayer != null)
-        {
-            Debug.Log("powerUp " + PowerUpName + " collision with a player");
             ApplyBonus(collidedPlayer);
-        }
 
         Destroy(gameObject);
     }

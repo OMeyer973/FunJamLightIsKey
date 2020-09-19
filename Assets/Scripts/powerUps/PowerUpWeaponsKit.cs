@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PowerUpRegen : PowerUp
+public class PowerUpWeapons : PowerUp
 {
     #region MEMBERS
 
-    public int healthBonus = 20;
+    public WeaponsKit weaponsKit;
 
     #endregion MEMBERS
 
@@ -15,7 +15,7 @@ public class PowerUpRegen : PowerUp
     protected override void Init() { }
     protected override void ApplyBonus(Spaceship player)
     {
-        player.Regen(10);
+        player.AssignWeaponsKit(weaponsKit);
     }
 
     #endregion METHODS

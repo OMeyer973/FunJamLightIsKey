@@ -5,6 +5,13 @@ using UnityEngine;
 using UnityEngine.Animations;
 using UnityEngine.InputSystem;
 
+[System.Serializable]
+public class WeaponsKit
+{
+    public Missile missilePrefab;
+    public Turret turretPrefab;
+}
+
 public class Spaceship : MonoBehaviour
 {
     #region MEMBERS
@@ -33,22 +40,36 @@ public class Spaceship : MonoBehaviour
     private float maxHealthPoints = 100;
     public float healthPoints;
     public Spaceship enemy;
-    public Missile missilePrefab;
+
+    public WeaponsKit startingWeaponsKit;
+    private WeaponsKit weaponsKit;
     private Turret turret;
+
     #endregion MEMBERS
 
     #region METHODS
     // Start is called before the first frame update
     void Start() 
     {
+        weaponsKit = startingWeaponsKit;
         healthPoints = maxHealthPoints;
-        turret = GetComponentInChildren<Turret>();
-        if (turret) turret.Initiate(this, enemy); 
+
+        InitTurret();
+    }
+
+    void InitTurret()
+    {
+        if (weaponsKit.turretPrefab)
+        {
+            Vector3 turretPos = transform.position + new Vector3(0f, 0.5f, 0f);
+            turret = Instantiate(weaponsKit.turretPrefab, turretPos, Quaternion.identity, transform).GetComponent<Turret>();
+            turret.Initiate(this, enemy);
+        }
         else Debug.LogError("Spaceship can't find child turret");
     }
 
-// called at player initialization to link it to the input prefab thingy
-public int GetInputIndex() { return inputIndex; }
+    // called at player initialization to link it to the input prefab thingy
+    public int GetInputIndex() { return inputIndex; }
 
     void Update() {}
 
@@ -96,7 +117,7 @@ public int GetInputIndex() { return inputIndex; }
 
     public void setInputMoveVector(Vector2 vec2) { inputMove = vec2; }
 
-    public void ShootEnemy() { turret.Shoot(missilePrefab); }
+    public void ShootEnemy() { turret.Shoot(weaponsKit.missilePrefab); }
     public void TakeDamage(float damage)
     {
         healthPoints -= damage;
@@ -108,6 +129,12 @@ public int GetInputIndex() { return inputIndex; }
     {
         healthPoints += healthAmount;
         if (healthPoints > maxHealthPoints) { healthPoints = maxHealthPoints; }
+    }
+    public void AssignWeaponsKit(WeaponsKit wp)
+    {
+        weaponsKit = wp;
+        Destroy(turret);
+        InitTurret();
     }
 
     private void Die()
