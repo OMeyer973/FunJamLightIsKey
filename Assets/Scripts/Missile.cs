@@ -32,14 +32,13 @@ public class Missile : MonoBehaviour
         ContactPoint contact = collision.GetContact(0);
         Quaternion rotation = Quaternion.FromToRotation(Vector3.up, contact.normal);
         Vector3 position = contact.point;
-        Instantiate(explosionPrefab, position, rotation);
-
+        if (explosionPrefab) Instantiate(explosionPrefab, position, rotation);
+        else Debug.LogError("unassiged explosionPrefab in missile");
         if (collidedPlayer != null && collidedPlayer != emitter)
         {
             Debug.Log("missile colision w target");
             collidedPlayer.TakeDamage(damage);
         }
-
         Destroy(gameObject);
     }
 
