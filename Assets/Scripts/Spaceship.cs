@@ -40,6 +40,7 @@ public class Spaceship : MonoBehaviour
     private float maxHealthPoints = 100;
     public float healthPoints;
     public Spaceship enemy;
+    public GameObject deathExplosionPrefab;
 
     public WeaponsKit startingWeaponsKit;
     private WeaponsKit weaponsKit;
@@ -139,7 +140,10 @@ public class Spaceship : MonoBehaviour
 
     private void Die()
     {
-        // todo
+        if (deathExplosionPrefab) Instantiate(deathExplosionPrefab, transform.position, transform.rotation);
+        else Debug.LogError("unassiged explosionPrefab in missile");
+
+        Destroy(gameObject);
     }
 
     #endregion METHODS

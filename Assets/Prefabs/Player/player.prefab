@@ -108,6 +108,8 @@ MonoBehaviour:
   maxHealthPoints: 100
   healthPoints: 100
   enemy: {fileID: 0}
+  deathExplosionPrefab: {fileID: 2324916356901007578, guid: 3d899682edf1aeb45b2614b9fca1f4a1,
+    type: 3}
   startingWeaponsKit:
     missilePrefab: {fileID: 4107589742385316205, guid: 924612bbde49e02408f69e3fd2c5418e,
       type: 3}
