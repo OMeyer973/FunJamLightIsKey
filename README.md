@@ -1,2 +1,2 @@
 # FunJamLightIsKey
-tiny game made quick
+tiny game made quick - aborted
